@@ -1,0 +1,127 @@
+/* Contenitore principale del modulo di registrazione */
+.form-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 30px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    background-color: #fff;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+.form-container:hover {
+    transform: translateY(-5px);
+}
+
+/* Titolo del modulo */
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+/* Layout del modulo di registrazione */
+.auth-form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Gruppo di elementi del modulo */
+.form-group {
+    margin-bottom: 20px;
+}
+
+/* Stile delle etichette dei campi */
+label {
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+}
+
+/* Stile dei campi di input */
+.form-control {
+    padding: 12px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s, box-shadow 0.3s ease-in-out;
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+    outline: none;
+}
+
+/* Pulsante di invio */
+.btn-primary {
+    padding: 12px;
+    font-size: 1.1rem;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s ease-in-out;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    transform: translateY(-3px);
+}
+
+.btn-primary:active {
+    transform: translateY(1px);
+}
+
+/* Sezione per il cambio tra login e registrazione */
+.auth-switch {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.auth-switch a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.auth-switch a:hover {
+    text-decoration: underline;
+}
+
+/* Stile dei messaggi di errore */
+.error-message {
+    color: #e74c3c;
+    font-size: 14px;
+    margin-bottom: 20px;
+    text-align: center;
+    background-color: rgba(231, 76, 60, 0.1);
+    padding: 8px;
+    border-radius: 5px;
+}
+
+/* Responsività */
+@media (max-width: 480px) {
+    .form-container {
+        width: 90%;
+        padding: 20px;
+    }
+
+    h2 {
+        font-size: 1.3rem;
+    }
+
+    .form-control {
+        font-size: 0.95rem;
+        padding: 10px;
+    }
+
+    .btn-primary {
+        padding: 10px;
+        font-size: 1rem;
+    }
+}

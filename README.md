@@ -41,14 +41,12 @@
 - **jsonwebtoken**: Per la generazione e verifica di token JWT.
 
 ### **Sicurezza**
-- Hashing delle password con **bcrypt** (10 salt rounds predefiniti).
+- Hashing delle password con **bcrypt** .
 - Uso di **variabili d'ambiente** per informazioni sensibili (es. chiave JWT, URI del database).
 
 ---
 
 ## **Sicurezza e Gestione delle Password**
-
-La sicurezza è una priorità per **Event Planner**. Di seguito, i punti principali implementati:
 
 - **Password sicure**:
   - Le password non vengono mai memorizzate in chiaro. 

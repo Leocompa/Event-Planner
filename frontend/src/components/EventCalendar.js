@@ -1,54 +1,56 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, Button } from 'react-bootstrap';
-import { Calendar, momentLocalizer } from 'react-big-calendar';
-import moment from 'moment';
-import 'react-big-calendar/lib/css/react-big-calendar.css';
-import axios from 'axios';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import { Modal, Button } from 'react-bootstrap';  // Importa i componenti per il modale e i bottoni
+import { Calendar, momentLocalizer } from 'react-big-calendar';  // Importa il calendario
+import moment from 'moment';  // Per la gestione delle date
+import 'react-big-calendar/lib/css/react-big-calendar.css';  // Stili per il calendario
+import axios from 'axios';  // Per effettuare le richieste HTTP
+import DatePicker from 'react-datepicker';  // Per il picker delle date
+import 'react-datepicker/dist/react-datepicker.css';  // Stili per il datepicker
 
+// Inizializza il localizer per il calendario usando moment.js
 const localizer = momentLocalizer(moment);
 
 const EventCalendar = () => {
-  const [events, setEvents] = useState([]);
-  const [showModal, setShowModal] = useState(false);
-  const [selectedEvent, setSelectedEvent] = useState(null);
+  // Stati per gestire gli eventi, il modale, la selezione e i dati dell'evento
+  const [events, setEvents] = useState([]);  // Lista degli eventi
+  const [showModal, setShowModal] = useState(false);  // Stato per il controllo della visibilità del modale
+  const [selectedEvent, setSelectedEvent] = useState(null);  // Evento selezionato per modifiche
   const [newEvent, setNewEvent] = useState({
     title: '',
     start: new Date(),
     end: new Date(),
-  });
-  const [isEditing, setIsEditing] = useState(false);  // Track if we are editing the event
+  });  // Dati per il nuovo evento
+  const [isEditing, setIsEditing] = useState(false);  // Stato per tracciare se siamo in modalità di modifica o creazione
 
-  const API_URL = 'http://localhost:5001/api/events';
+  const API_URL = 'http://localhost:5001/api/events';  // URL API per ottenere e gestire gli eventi
 
-  // Fetch events from backend
+  // Effettua la richiesta per ottenere gli eventi dal server al primo caricamento del componente
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('token');  // Ottiene il token di autorizzazione salvato localmente
         const response = await axios.get(API_URL, {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,  // Aggiunge il token alle intestazioni della richiesta
           },
         });
 
-        // Ensure all dates are converted to JavaScript Date objects
+        // Converte tutte le date da stringa a oggetto Date
         const formattedEvents = response.data.map(event => ({
           ...event,
-          start: new Date(event.start), // Convert to Date object
-          end: new Date(event.end),    // Convert to Date object
+          start: new Date(event.start),  // Converte la data di inizio in un oggetto Date
+          end: new Date(event.end),      // Converte la data di fine in un oggetto Date
         }));
 
-        setEvents(formattedEvents);
+        setEvents(formattedEvents);  // Imposta gli eventi nello stato
       } catch (error) {
-        console.error("Error fetching events", error);
+        console.error("Error fetching events", error);  // Gestisce gli errori nella richiesta
       }
     };
     fetchEvents();
   }, []);
 
-  // Handle date changes
+  // Funzione per gestire i cambiamenti nelle date (inizio e fine) per la creazione o la modifica dell'evento
   const handleDateChange = (date, field) => {
     if (selectedEvent) {
       setSelectedEvent({ ...selectedEvent, [field]: date });
@@ -57,10 +59,10 @@ const EventCalendar = () => {
     }
   };
 
-  // Add a new event
+  // Funzione per aggiungere un nuovo evento
   const handleAddEvent = async () => {
     if (!newEvent.title || !newEvent.start || !newEvent.end) {
-      console.error("Missing data");
+      console.error("Missing data");  // Controlla se i campi obbligatori sono compilati
       return;
     }
 
@@ -73,31 +75,32 @@ const EventCalendar = () => {
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,  // Aggiunge il token di autorizzazione
           },
         }
       );
 
-      // Ensure the response is formatted correctly
+      // Converte le date nella risposta in oggetti Date
       const addedEvent = {
         ...response.data,
-        start: new Date(response.data.start), // Convert to Date object
-        end: new Date(response.data.end),    // Convert to Date object
+        start: new Date(response.data.start),
+        end: new Date(response.data.end),
       };
 
+      // Aggiunge il nuovo evento alla lista degli eventi esistenti
       setEvents([...events, addedEvent]);
-      setShowModal(false);
+      setShowModal(false);  // Chiude il modale
       setNewEvent({
         title: '',
         start: new Date(),
         end: new Date(),
-      });
+      });  // Resetta i campi per il nuovo evento
     } catch (error) {
-      console.error("Error adding event", error);
+      console.error("Error adding event", error);  // Gestisce gli errori nell'aggiunta dell'evento
     }
   };
 
-  // Edit an existing event
+  // Funzione per modificare un evento esistente
   const handleEditEvent = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -108,31 +111,32 @@ const EventCalendar = () => {
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,  // Aggiunge il token di autorizzazione
           },
         }
       );
 
-      // Ensure the response is formatted correctly
+      // Converte le date nella risposta in oggetti Date
       const updatedEvent = {
         ...response.data,
-        start: new Date(response.data.start), // Convert to Date object
-        end: new Date(response.data.end),    // Convert to Date object
+        start: new Date(response.data.start),
+        end: new Date(response.data.end),
       };
 
+      // Aggiorna l'evento nella lista esistente
       const updatedEvents = events.map(event =>
         event._id === selectedEvent._id ? updatedEvent : event
       );
 
-      setEvents(updatedEvents);
-      setShowModal(false);
-      setSelectedEvent(null);
+      setEvents(updatedEvents);  // Imposta gli eventi aggiornati nello stato
+      setShowModal(false);  // Chiude il modale
+      setSelectedEvent(null);  // Resetta l'evento selezionato
     } catch (error) {
-      console.error("Error editing event", error);
+      console.error("Error editing event", error);  // Gestisce gli errori nella modifica
     }
   };
 
-  // Delete an event
+  // Funzione per eliminare un evento
   const handleDeleteEvent = async () => {
     if (!selectedEvent || !selectedEvent._id) {
       console.error("No event selected or event ID is missing.");
@@ -144,63 +148,64 @@ const EventCalendar = () => {
         const token = localStorage.getItem('token');
         await axios.delete(`${API_URL}/${selectedEvent._id}`, {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,  // Aggiunge il token di autorizzazione
           },
         });
-        setEvents(events.filter(event => event._id !== selectedEvent._id));
-        setShowModal(false);
-        setSelectedEvent(null);
+        setEvents(events.filter(event => event._id !== selectedEvent._id));  // Rimuove l'evento dalla lista
+        setShowModal(false);  // Chiude il modale
+        setSelectedEvent(null);  // Resetta l'evento selezionato
       } catch (error) {
-        console.error("Error deleting event", error);
+        console.error("Error deleting event", error);  // Gestisce gli errori nell'eliminazione
       }
     }
   };
 
-  // Handle event click
+  // Funzione per gestire il click su un evento esistente (per modificarlo)
   const handleEventClick = (event) => {
     setSelectedEvent(event);
-    setShowModal(true);
-    setIsEditing(false);  // Default is read-only mode
+    setShowModal(true);  // Mostra il modale con i dettagli dell'evento
+    setIsEditing(false);  // Modalità lettura (non modifica)
   };
 
-  // Handle click to create a new event
+  // Funzione per aprire il modale per creare un nuovo evento
   const handleNewEventClick = () => {
-    setSelectedEvent(null);
+    setSelectedEvent(null);  // Rimuove l'evento selezionato
     setNewEvent({
       title: '',
       start: new Date(),
       end: new Date(),
-    });
-    setShowModal(true);
-    setIsEditing(true);  // Modal for creating new event
+    });  // Resetta i campi del nuovo evento
+    setShowModal(true);  // Mostra il modale
+    setIsEditing(true);  // Modalità creazione evento
   };
 
   return (
     <div>
-      {/* Add Event Button */}
+      {/* Pulsante per aggiungere un nuovo evento */}
       <Button onClick={handleNewEventClick}>Add Event</Button>
 
-      {/* Calendar */}
+      {/* Calendario */}
       <Calendar
-        localizer={localizer}
-        events={events}
+        localizer={localizer}  // Imposta il localizer di moment.js
+        events={events}  // Passa la lista degli eventi
         startAccessor="start"
         endAccessor="end"
-        style={{ height: 500 }}
-        onSelectEvent={handleEventClick}
-        views={['month', 'week', 'day', 'agenda']} // Adds agenda view
-        defaultView="month" // Set default view to month
-        step={15} // 15-minute intervals
-        timeslots={4} // 4 time slots per hour (15 minutes each)
-        showMultiDayTimes={true} // Display multi-day events
+        style={{ height: 500 }}  // Imposta l'altezza del calendario
+        onSelectEvent={handleEventClick}  // Gestisce il click su un evento
+        views={['month', 'week', 'day', 'agenda']}  // Aggiunge diverse viste (mese, settimana, giorno, agenda)
+        defaultView="month"  // Imposta la vista di default sul mese
+        step={15}  // Intervalli di 15 minuti
+        timeslots={4}  // 4 slot per ogni ora (ogni 15 minuti)
+        showMultiDayTimes={true}  // Mostra gli eventi multi-giorno
       />
 
-      {/* Add/Edit Event Modal */}
+      {/* Modale per aggiungere/modificare un evento */}
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
           <Modal.Title>{selectedEvent ? 'Event Details' : 'Add Event'}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          {/* Campo per il titolo dell'evento */}
           <input
             type="text"
             value={selectedEvent ? selectedEvent.title : newEvent.title}
@@ -211,7 +216,7 @@ const EventCalendar = () => {
             }
             placeholder="Event Title"
             className="form-control"
-            disabled={!isEditing} // Disable input if not editing
+            disabled={!isEditing}  // Disabilita l'input se non in modalità modifica
           />
           <label>Start Date and Time</label>
           <DatePicker
@@ -221,7 +226,7 @@ const EventCalendar = () => {
             dateFormat="Pp"
             timeIntervals={15}
             className="form-control"
-            disabled={!isEditing} // Disable date picker if not editing
+            disabled={!isEditing}  // Disabilita il picker se non in modalità modifica
           />
           <label>End Date and Time</label>
           <DatePicker
@@ -231,33 +236,24 @@ const EventCalendar = () => {
             dateFormat="Pp"
             timeIntervals={15}
             className="form-control"
-            disabled={!isEditing} // Disable date picker if not editing
+            disabled={!isEditing}  // Disabilita il picker se non in modalità modifica
           />
         </Modal.Body>
         <Modal.Footer>
+          {/* Mostra i pulsanti per la gestione dell'evento */}
           {selectedEvent && !isEditing && (
             <>
-              <Button variant="danger" onClick={handleDeleteEvent}>
-                Delete Event
-              </Button>
-              <Button variant="primary" onClick={() => setIsEditing(true)}>
-                Edit Event
-              </Button>
+              <Button variant="danger" onClick={handleDeleteEvent}>Delete Event</Button>
+              <Button variant="primary" onClick={() => setIsEditing(true)}>Edit Event</Button>
             </>
           )}
           {selectedEvent && isEditing && (
-            <Button variant="primary" onClick={handleEditEvent}>
-              Save Changes
-            </Button>
+            <Button variant="primary" onClick={handleEditEvent}>Save Changes</Button>
           )}
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
-            Cancel
-          </Button>
-          {/* Add Event */}
+          <Button variant="secondary" onClick={() => setShowModal(false)}>Cancel</Button>
+          {/* Se non c'è un evento selezionato, consente l'aggiunta di un nuovo evento */}
           {!selectedEvent && isEditing && (
-            <Button variant="primary" onClick={handleAddEvent}>
-              Add Event
-            </Button>
+            <Button variant="primary" onClick={handleAddEvent}>Add Event</Button>
           )}
         </Modal.Footer>
       </Modal>

@@ -1,6 +1,6 @@
 # **Event Planner**
 
-**Event Planner** è un'applicazione web sviluppata per aiutare gli utenti a gestire e organizzare i propri eventi in modo semplice e intuitivo. La piattaforma offre una serie di funzionalità per aggiungere, modificare, eliminare e visualizzare eventi, con un'interfaccia moderna e un approccio incentrato sulla sicurezza dei dati.
+**Event Planner** è un'applicazione web sviluppata per aiutare gli utenti a gestire e organizzare i propri eventi in modo semplice e intuitivo. La piattaforma offre una serie di funzionalità per aggiungere, modificare, eliminare e visualizzare eventi.
 
 ---
 
@@ -9,11 +9,11 @@
 ### **Gestione degli Eventi**
 - **Visualizzazione calendario**:
   - Formati disponibili: mese, settimana, giorno e agenda.
-  - Ogni evento mostra informazioni come titolo, orari di inizio e fine.
+  - Ogni evento mostra informazioni come titolo, orari e data di inizio e fine.
 - **Aggiunta di eventi**:
-  - Gli utenti autenticati possono creare eventi con dettagli personalizzati (titolo, date, orari).
+  - Solamente gli utenti autenticati possono creare nuovi eventi con i vare dettagli disponibili (titolo, date, orari).
 - **Modifica degli eventi**:
-  - Seleziona un evento per visualizzarne i dettagli e modifica titolo, date o orari.
+  - Seleziona un evento per visualizzarne i dettagli.
 - **Eliminazione degli eventi**:
   - Cancella eventi indesiderati con una richiesta di conferma.
 
@@ -42,7 +42,7 @@
 
 ### **Sicurezza**
 - Hashing delle password con **bcrypt** .
-- Uso di **variabili d'ambiente** per informazioni sensibili (es. chiave JWT, URI del database).
+- Uso di **variabili d'ambiente** per informazioni sensibili.
 
 ---
 
@@ -105,5 +105,11 @@ Clicca su Register per creare un nuovo account.<br>
 Effettua il Login con le credenziali appena registrate.<br>
 Una volta autenticato, puoi iniziare a gestire i tuoi eventi.
 
+---
+#### **Progetto svolto da:**
+
+| **Studente**         | **Matricola** |
+|----------------------|---------------|
+| Compagnucci Leonardo |    118708     |
 
   

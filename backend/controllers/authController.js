@@ -7,7 +7,7 @@ exports.registerUser = async (req, res) => {
     const { email, password } = req.body;
 
     try {
-        // Validate the email format
+        // Validazione del formato dell'email tramite una regex
         const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
         if (!emailRegex.test(email)) {
             return res.status(400).json({ 
@@ -16,7 +16,7 @@ exports.registerUser = async (req, res) => {
             });
         }
 
-        // Check if the user already exists
+        // Controlla se l'utente con la stessa email è già registrato nel database
         const existingUser = await User.findOne({ email });
         if (existingUser) {
             return res.status(400).json({ 
@@ -25,7 +25,7 @@ exports.registerUser = async (req, res) => {
             });
         }
 
-        // Password strength check
+        // Controlla che la password rispetti i requisiti di complessità tramite una regex
         const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
         if (!passwordRegex.test(password)) {
             return res.status(400).json({ 
@@ -34,22 +34,24 @@ exports.registerUser = async (req, res) => {
             });
         }
 
-        // Encrypt the password
+        // Crittografia della password usando bcrypt
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // Create a new user
+        // Creazione di un nuovo utente con email e password crittografata
         const newUser = new User({ email, password: hashedPassword });
         await newUser.save();
 
-        // Generate a token immediately after registration
+        // Generazione di un token JWT per autenticare l'utente immediatamente dopo la registrazione
         const token = jwt.sign(
             { id: newUser._id, email: newUser.email },
-            process.env.JWT_SECRET, // Use the secret key from the .env file
-            { expiresIn: '1h' }
+            process.env.JWT_SECRET, // Chiave segreta recuperata dall'ambiente
+            { expiresIn: '1h' } // Token valido per 1 ora
         );
 
+        // Risposta con un messaggio di successo e il token generato
         res.status(201).json({ message: 'Registration successful!', token });
     } catch (error) {
+        // Gestione di eventuali errori durante il processo di registrazione
         console.error('Error during registration:', error);
         res.status(500).json({ 
             message: 'Server error', 
@@ -64,6 +66,7 @@ exports.loginUser = async (req, res) => {
     const { email, password } = req.body;
 
     try {
+        // Ricerca di un utente nel database con l'email fornita
         const user = await User.findOne({ email });
         if (!user) {
             return res.status(400).json({ 
@@ -72,6 +75,7 @@ exports.loginUser = async (req, res) => {
             });
         }
 
+        // Confronto della password fornita con quella memorizzata nel database
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             return res.status(400).json({ 
@@ -80,15 +84,17 @@ exports.loginUser = async (req, res) => {
             });
         }
 
-        // Generate the JWT token
+        // Generazione di un token JWT per autenticare l'utente
         const token = jwt.sign(
             { id: user._id, email: user.email },
-            process.env.JWT_SECRET, // Use the secret key from the .env file
-            { expiresIn: '1h' }
+            process.env.JWT_SECRET, // Chiave segreta recuperata dall'ambiente
+            { expiresIn: '1h' } // Token valido per 1 ora
         );
 
+        // Risposta con il token generato
         res.json({ token });
     } catch (error) {
+        // Gestione di eventuali errori durante il processo di login
         console.error('Error during login:', error);
         res.status(500).json({ 
             message: 'Server error', 

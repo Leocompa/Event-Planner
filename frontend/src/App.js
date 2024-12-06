@@ -6,7 +6,7 @@ import Register from './components/Register';
 import { Modal, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import { useAuth } from './context/AuthContext'; // useAuth per gestire lo stato dell'autenticazione
+import { useAuth } from './context/AuthContext';
 
 function App() {
     const { user, login, logout, loading } = useAuth();  // Estrae le funzioni e lo stato relativi all'autenticazione
@@ -24,7 +24,7 @@ function App() {
                 navigate('/');  // Dopo 2 secondi, redirige alla pagina principale
             }, 2000);
         }
-    }, [user, navigate]);  // Eseguito ogni volta che cambia lo stato `user` (login)
+    }, [user, navigate]);  // Eseguito ogni volta che cambia lo stato `user`
 
     // Funzione per gestire il login dell'utente
     const handleLogin = (token) => {

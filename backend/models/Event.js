@@ -25,5 +25,4 @@ const EventSchema = new mongoose.Schema({
     }
 });
 
-// Esporta il modello Event basato sullo schema definito
 module.exports = mongoose.model('Event', EventSchema);

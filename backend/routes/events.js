@@ -1,4 +1,3 @@
-// Importa i moduli necessari
 const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
@@ -126,5 +125,4 @@ router.delete('/:id', authMiddleware, async (req, res) => {
     }
 });
 
-// Esporta il router per poterlo utilizzare nel file principale dell'app
 module.exports = router;

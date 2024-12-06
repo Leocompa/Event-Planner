@@ -1,4 +1,3 @@
-// Importa il modulo Express per creare il router
 const express = require('express');
 
 // Importa direttamente le funzioni del controller per la registrazione e il login
@@ -15,5 +14,4 @@ router.post('/register', registerUser);
 // Quando viene fatta una richiesta POST a /login, la funzione `loginUser` gestirà la logica
 router.post('/login', loginUser);
 
-// Esporta il router in modo che possa essere utilizzato nel file principale dell'app
 module.exports = router;

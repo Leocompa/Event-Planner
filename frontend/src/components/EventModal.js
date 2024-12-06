@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 const EventModal = ({ isOpen, onClose, eventData, onAddEvent, onEditEvent, onDeleteEvent }) => {
-    // Stato per gestire la modalità della finestra modale ('view', 'edit', 'add')
+    // Stato per gestire la modalità della finestra modale
     const [mode, setMode] = useState('view'); // 'view' per visualizzare il riepilogo, 'edit' per la modifica
     // Stato per gestire i dati dell'evento
     const [title, setTitle] = useState('');
@@ -56,11 +56,11 @@ const EventModal = ({ isOpen, onClose, eventData, onAddEvent, onEditEvent, onDel
 
     // Funzione per eliminare un evento
     const handleDeleteEvent = () => {
-        onDeleteEvent(eventData._id); // Passa l'ID dell'evento da eliminare al genitore
+        onDeleteEvent(eventData._id); // Passa l'ID dell'evento da eliminare
         onClose(); // Chiudi la finestra modale
     };
 
-    // Funzione per passare alla modalità di modifica (attiva i campi di input)
+    // Funzione per passare alla modalità di modifica
     const handleSwitchToEdit = () => {
         setMode('edit'); // Cambia la modalità a 'edit' per abilitare la modifica dei campi
     };
@@ -68,7 +68,7 @@ const EventModal = ({ isOpen, onClose, eventData, onAddEvent, onEditEvent, onDel
     // Funzione per renderizzare i pulsanti in base alla modalità
     const renderButtons = () => {
         if (mode === 'view') {
-            // Modalità di visualizzazione (riepilogo)
+            // Modalità di visualizzazione riepilogo
             return (
                 <>
                     <button className="edit" onClick={handleSwitchToEdit}>Modifica Evento</button>

@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-// Creating the context
 const AuthContext = createContext();
 
 export const useAuth = () => {
@@ -8,9 +7,9 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(null); // User state
-    const [loading, setLoading] = useState(true); // Loading state to check the token
-    const [error, setError] = useState(null); // Error state for handling errors
+    const [user, setUser] = useState(null); // Stato utente
+    const [loading, setLoading] = useState(true); // Stato di caricamento per verificare il token
+    const [error, setError] = useState(null); // Stato per gestire eventuali errori
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -20,18 +19,18 @@ export const AuthProvider = ({ children }) => {
             setUser({ token, username });
         }
 
-        setLoading(false); // After checking the token, set loading to false
+        setLoading(false); // Dopo aver controllato il token, impostare il caricamento su false
     }, []);
 
     const login = (token) => {
         try {
-            const username = "dummyUsername";  // Replace with actual username if needed
+            const username = "dummyUsername"; 
             localStorage.setItem('token', token);
-            localStorage.setItem('username', username); // Also save the username
-            setUser({ token, username }); // Save the user in the state
-            setError(null); // Clear any previous errors
+            localStorage.setItem('username', username); // Salvare anche il nome utente
+            setUser({ token, username }); // Salvare l'utente nello stato
+            setError(null); // Cancellare eventuali errori precedenti
         } catch (err) {
-            setError('An error occurred during login');
+            setError('Si è verificato un errore durante il login');
         }
     };
 
@@ -39,16 +38,16 @@ export const AuthProvider = ({ children }) => {
         try {
             localStorage.removeItem('token');
             localStorage.removeItem('username');
-            setUser(null); // Remove the user from the state
-            setError(null); // Clear any previous errors
+            setUser(null); // Rimuovere l'utente dallo stato
+            setError(null); // Cancellare eventuali errori precedenti
         } catch (err) {
-            setError('An error occurred during logout');
+            setError('Si è verificato un errore durante il logout');
         }
     };
 
     return (
         <AuthContext.Provider value={{ user, login, logout, loading, error }}>
-            {!loading ? children : <div>Loading...</div>} {/* Renders children only when loading is complete */}
+            {!loading ? children : <div>Caricamento...</div>} {/* Mostra i children solo quando il caricamento è completato */}
         </AuthContext.Provider>
     );
 };

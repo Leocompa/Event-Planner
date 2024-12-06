@@ -1,8 +1,7 @@
-// Importa i moduli necessari
 const express = require('express');
-const bcrypt = require('bcrypt'); // Per gestire la crittografia della password
-const jwt = require('jsonwebtoken'); // Per generare il token di autenticazione
-const User = require('../models/User'); // Modello per interagire con la collezione degli utenti
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const User = require('../models/User');
 
 // Crea un router Express
 const router = express.Router();
@@ -70,5 +69,4 @@ router.post('/login', async (req, res) => {
     }
 });
 
-// Esporta il router per poterlo usare nell'app principale
 module.exports = router;

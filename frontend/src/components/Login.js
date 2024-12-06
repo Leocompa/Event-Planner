@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // useNavigate è usato per navigare tra le pagine
-import './Login.css'; // Importa il CSS per lo stile del componente
+import { useNavigate } from 'react-router-dom';
+import './Login.css';
 
 const Login = ({ onLogin }) => {
     // Stati per gestire i dati dell'utente e lo stato del login
@@ -8,11 +8,11 @@ const Login = ({ onLogin }) => {
     const [password, setPassword] = useState(''); // Stato per memorizzare la password
     const [error, setError] = useState(null); // Stato per memorizzare eventuali errori durante il login
     const [isLoading, setIsLoading] = useState(false); // Stato per gestire il caricamento del login
-    const navigate = useNavigate(); // Hook per la navigazione tra le pagine
+    const navigate = useNavigate(); // navigazione tra le pagine
 
     // Funzione per gestire il submit del form di login
     const handleSubmit = async (e) => {
-        e.preventDefault(); // Previene il comportamento di default del form (che ricaricherebbe la pagina)
+        e.preventDefault(); // Previene il comportamento di default del form
         setIsLoading(true); // Inizia il caricamento
         setError(null); // Reset dell'errore
 
@@ -26,11 +26,11 @@ const Login = ({ onLogin }) => {
         try {
             // Effettua la richiesta di login al server con l'email e la password
             const response = await fetch('http://localhost:5001/api/auth/login', {
-                method: 'POST', // Metodo di richiesta: POST
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json', // Indica che i dati sono in formato JSON
                 },
-                body: JSON.stringify({ email, password }), // Corpo della richiesta: i dati dell'utente
+                body: JSON.stringify({ email, password }), // dati dell'utente
             });
     
             // Se la risposta del server non è ok, gestisci l'errore
@@ -49,7 +49,7 @@ const Login = ({ onLogin }) => {
             setError(null); // Reset dell'errore
             navigate('/'); // Naviga alla home page dopo il login
         } catch (error) {
-            // Gestisce gli errori della richiesta (ad esempio se il server non è raggiungibile)
+            // Gestisce gli errori della richiesta
             setError('An error occurred during login');
         } finally {
             setIsLoading(false); // Ferma il caricamento al termine dell'operazione (sia in caso di successo che di errore)

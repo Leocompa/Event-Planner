@@ -15,5 +15,4 @@ const UserSchema = new mongoose.Schema({
     }
 });
 
-// Esporta il modello User basato sullo schema definito
 module.exports = mongoose.model('User', UserSchema);

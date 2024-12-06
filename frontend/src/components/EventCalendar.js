@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, Button } from 'react-bootstrap';  // Importa i componenti per il modale e i bottoni
-import { Calendar, momentLocalizer } from 'react-big-calendar';  // Importa il calendario
-import moment from 'moment';  // Per la gestione delle date
-import 'react-big-calendar/lib/css/react-big-calendar.css';  // Stili per il calendario
-import axios from 'axios';  // Per effettuare le richieste HTTP
-import DatePicker from 'react-datepicker';  // Per il picker delle date
-import 'react-datepicker/dist/react-datepicker.css';  // Stili per il datepicker
+import { Modal, Button } from 'react-bootstrap';
+import { Calendar, momentLocalizer } from 'react-big-calendar';
+import moment from 'moment'; 
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+import axios from 'axios'; 
+import DatePicker from 'react-datepicker'; 
+import 'react-datepicker/dist/react-datepicker.css'; 
 
 // Inizializza il localizer per il calendario usando moment.js
 const localizer = momentLocalizer(moment);

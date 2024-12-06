@@ -1,4 +1,4 @@
-// URL del backend per accedere agli eventi (modificare se necessario)
+// URL del backend per accedere agli eventi
 const API_URL = "http://localhost:5001/events";
 
 // Oggetto EventManager che gestisce le operazioni sugli eventi tramite il backend
@@ -9,7 +9,7 @@ const EventManager = {
       // Effettua una richiesta GET al backend per ottenere tutti gli eventi
       const response = await fetch(API_URL);
 
-      // Verifica se la risposta è positiva (status HTTP 200-299)
+      // Verifica se la risposta è positiva
       if (!response.ok) {
         // Se la risposta non è positiva, lancia un errore con il messaggio di stato
         throw new Error(`Failed to fetch events: ${response.statusText}`);
@@ -18,7 +18,7 @@ const EventManager = {
       // Converte la risposta in formato JSON e la restituisce
       return await response.json();
     } catch (error) {
-      // Gestisce gli errori durante la richiesta (sia di rete che di status)
+      // Gestisce gli errori durante la richiesta
       console.error("Error fetching events:", error);
       // Propaga l'errore per poterlo gestire altrove se necessario
       throw error;
@@ -44,7 +44,7 @@ const EventManager = {
         throw new Error(`Failed to add event: ${response.statusText}`);
       }
 
-      // Converte la risposta in formato JSON e la restituisce (evento aggiunto)
+      // Converte la risposta in formato JSON e la restituisce
       return await response.json();
     } catch (error) {
       // Gestisce gli errori durante l'aggiunta dell'evento
@@ -59,7 +59,7 @@ const EventManager = {
     try {
       // Effettua una richiesta PUT al backend per aggiornare l'evento esistente
       const response = await fetch(`${API_URL}/${event.id}`, {
-        method: "PUT", // Specifica che la richiesta è di tipo PUT (aggiornamento)
+        method: "PUT", // Specifica che la richiesta è di tipo PUT
         headers: {
           "Content-Type": "application/json", // Indica che il corpo della richiesta è in formato JSON
         },
@@ -73,7 +73,7 @@ const EventManager = {
         throw new Error(`Failed to update event: ${response.statusText}`);
       }
 
-      // Converte la risposta in formato JSON e la restituisce (evento aggiornato)
+      // Converte la risposta in formato JSON e la restituisce
       return await response.json();
     } catch (error) {
       // Gestisce gli errori durante l'aggiornamento dell'evento
@@ -105,5 +105,5 @@ const EventManager = {
   },
 };
 
-// Esporta l'oggetto EventManager per utilizzarlo in altri moduli
+
 export default EventManager;

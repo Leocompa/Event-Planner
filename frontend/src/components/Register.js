@@ -11,7 +11,7 @@ const Register = ({ onRegister }) => {
 
     // Funzione per gestire l'invio del modulo di registrazione
     const handleSubmit = async (e) => {
-        e.preventDefault();  // Impedisce il comportamento di default del form (evitare il refresh della pagina)
+        e.preventDefault();  // evitare il refresh della pagina
 
         // Verifica che le password corrispondano
         if (password !== confirmPassword) {
@@ -19,7 +19,7 @@ const Register = ({ onRegister }) => {
             return;
         }
 
-        // Verifica che la password sia abbastanza lunga (almeno 6 caratteri)
+        // Verifica che la password sia di almeno 6 caratteri
         if (password.length < 6) {
             setError('Password must be at least 6 characters long');  // Imposta un errore se la password è troppo corta
             return;
@@ -43,7 +43,7 @@ const Register = ({ onRegister }) => {
         }
     };
 
-    // Funzione per determinare se il form è valido (le password corrispondono e sono lunghe almeno 6 caratteri)
+    // le password corrispondono e sono lunghe almeno 6 caratteri
     const isFormValid = password === confirmPassword && password.length >= 6;
 
     return (

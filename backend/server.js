@@ -1,8 +1,7 @@
-// Importa i moduli necessari
-const express = require('express'); // Framework web per gestire le richieste HTTP
-const mongoose = require('mongoose'); // Modulo per interagire con MongoDB
-const cors = require('cors'); // Middleware per gestire le richieste da altri domini (CORS)
-require('dotenv').config(); // Carica le variabili d'ambiente da un file .env
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+require('dotenv').config();
 
 // Importa le route per l'autenticazione e gli eventi
 const authRoutes = require('./routes/auth');
@@ -10,7 +9,7 @@ const eventRoutes = require('./routes/events');
 
 // Crea un'applicazione Express
 const app = express();
-const PORT = process.env.PORT || 5001; // Usa la porta definita nelle variabili d'ambiente o 5001 di default
+const PORT = process.env.PORT || 5001;
 
 // Middleware
 app.use(cors()); // Abilita CORS per tutte le richieste (evita problemi di accesso da domini diversi)

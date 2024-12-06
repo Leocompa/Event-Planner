@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Navbar, Nav } from 'react-bootstrap'; // Importa i componenti di Bootstrap per il Navbar
-import { useAuth } from '../context/AuthContext'; // Importa il contesto per la gestione dell'autenticazione
-import { Link, useNavigate } from 'react-router-dom'; // Importa Link per la navigazione tra pagine e useNavigate per la redirezione
+import { Navbar, Nav } from 'react-bootstrap';
+import { useAuth } from '../context/AuthContext'; 
+import { Link, useNavigate } from 'react-router-dom';
 
 const Navigation = () => {
     // Estrae i valori dal contesto di autenticazione

@@ -13,5 +13,4 @@ router.post('/register', authController.registerUser);
 // Chiama il metodo `loginUser` del controller
 router.post('/login', authController.loginUser);
 
-// Esporta il router per utilizzarlo nel file principale dell'app
 module.exports = router;

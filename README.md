@@ -63,7 +63,7 @@
 
 ### **1. Clonare il Repository**
 ```bash
-git clone <repository-url>
+git clone https://github.com/Leocompa/Event-Planner
 cd <repository-folder>
 ```
 

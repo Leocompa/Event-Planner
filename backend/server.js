@@ -11,7 +11,7 @@ const eventRoutes = require('./routes/events');
 const app = express();
 const PORT = process.env.PORT || 5001;
 
-// Configura CORS con opzioni personalizzate
+// Configurazione CORS
 const corsOptions = {
   origin: process.env.FRONTEND_URL || 'http://localhost:3000', // Consenti solo il dominio del frontend
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Metodi permessi

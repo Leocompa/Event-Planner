@@ -56,7 +56,7 @@ router.post('/login', async (req, res) => {
         // Se il login è riuscito, crea un token JWT
         const token = jwt.sign(
             { id: user._id, email: user.email }, // Dati da includere nel token
-            'yourSecretKey', // Sostituire con una chiave segreta più sicura
+            'yourSecretKey', 
             { expiresIn: '1h' } // Imposta la scadenza del token (1 ora)
         );
 
